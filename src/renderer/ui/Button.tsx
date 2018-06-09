@@ -1,13 +1,7 @@
-import { darken } from "polished"
-import styled, { css } from "react-emotion"
-import {
-  dangerColor,
-  infoColor,
-  successColor,
-  themeColor,
-  warningColor,
-} from "./colors"
-import { Intent } from "./Intent"
+import { darken } from "polished";
+import styled, { css } from "react-emotion";
+import * as colors from "./colors";
+import { Intent } from "./Intent";
 
 export interface ButtonProps {
   intent?: Intent
@@ -25,15 +19,15 @@ const createButtonStyle = (color: string) => css`
 const resolveIntentStyle = ({ intent = Intent.primary }: ButtonProps) => {
   switch (intent) {
     case Intent.primary:
-      return createButtonStyle(darken(0.1, themeColor))
+      return createButtonStyle(darken(0.1, colors.themeColor))
     case Intent.success:
-      return createButtonStyle(successColor)
+      return createButtonStyle(colors.successColor)
     case Intent.warning:
-      return createButtonStyle(warningColor)
+      return createButtonStyle(colors.warningColor)
     case Intent.danger:
-      return createButtonStyle(dangerColor)
+      return createButtonStyle(colors.dangerColor)
     case Intent.info:
-      return createButtonStyle(infoColor)
+      return createButtonStyle(colors.infoColor)
   }
 }
 
