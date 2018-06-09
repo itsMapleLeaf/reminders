@@ -2,7 +2,7 @@ import { app, BrowserWindow, Menu, screen, Tray } from "electron"
 import { watch } from "fs"
 import { resolve } from "path"
 
-const devMode = process.argv.includes("--dev")
+const isDevMode = process.argv.includes("--dev")
 
 function createWindow() {
   const windowWidth = 600
@@ -10,7 +10,7 @@ function createWindow() {
   const displayBounds = screen.getPrimaryDisplay().workArea
 
   const win = new BrowserWindow({
-    frame: false,
+    frame: isDevMode,
     width: windowWidth,
     height: windowHeight,
     x: displayBounds.width - windowWidth - 10,
@@ -19,9 +19,11 @@ function createWindow() {
 
   win.loadFile(resolve(__dirname, "../assets/index.html"))
 
-  win.on("blur", () => {
-    win.hide()
-  })
+  if (!isDevMode) {
+    win.on("blur", () => {
+      win.hide()
+    })
+  }
 
   return win
 }
@@ -50,7 +52,7 @@ function ready() {
 
   createTray(win)
 
-  if (devMode) {
+  if (isDevMode) {
     initDevMode(win)
   }
 }
