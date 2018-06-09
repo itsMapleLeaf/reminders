@@ -21,12 +21,16 @@ export function applyGlobalStyles() {
       color: inherit;
     }
 
-    button {
+    button, input, textarea {
       background: transparent;
       border: none;
       font: inherit;
       color: inherit;
       text-align: inherit;
+    }
+
+    fieldset {
+      border: none;
     }
 
     h1, h2, h3, h4, h5, h6 {
