@@ -51,7 +51,7 @@ interface FormValues {
 
 interface ReminderEditModalState {
   values: FormValues
-  errors: Partial<FormValues>
+  errors: { [K in keyof FormValues]?: string }
 }
 
 export class ReminderEditModal extends React.Component<
