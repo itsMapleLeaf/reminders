@@ -1,10 +1,9 @@
 import React from "react"
-import { Reminder } from "./Reminder"
-import { ReminderData } from "./ReminderData"
-import { ReminderEditModal } from "./ReminderEditModal"
-import { ReminderList } from "./ReminderList"
-import { ReminderListSeparator } from "./ReminderListSeparator"
-import { Title } from "./Title"
+import { ReminderData } from "../ReminderData"
+import { Reminder } from "./reminder/Reminder"
+import { ReminderEditModal } from "./reminder/ReminderEditModal"
+import { ReminderList, ReminderListSeparator } from "./reminder/ReminderList"
+import { Title } from "./ui/Title"
 
 interface AppState {
   reminders: ReminderData[]

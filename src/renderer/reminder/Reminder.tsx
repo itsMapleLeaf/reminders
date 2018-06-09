@@ -1,8 +1,8 @@
 import { lighten } from "polished"
 import React from "react"
 import styled, { css } from "react-emotion"
-import { themeColor } from "./colors"
-import { ReminderData } from "./ReminderData"
+import { ReminderData } from "../../ReminderData"
+import { themeColor } from "../ui/colors"
 
 const resolveReminderActiveStyle = ({ active }: { active?: boolean }) =>
   active && reminderActiveStyle

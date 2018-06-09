@@ -1,11 +1,11 @@
 import React from "react"
 import styled from "react-emotion"
-import { Button } from "./Button"
-import { themeColor } from "./colors"
-import { Intent } from "./Intent"
-import { ReminderData } from "./ReminderData"
-import { TextField } from "./TextField"
-import { Title } from "./Title"
+import { ReminderData } from "../../ReminderData"
+import { Button } from "../ui/Button"
+import { themeColor } from "../ui/colors"
+import { Intent } from "../ui/Intent"
+import { TextField } from "../ui/TextField"
+import { Title } from "../ui/Title"
 
 const Shade = styled("div")`
   background: rgba(0, 0, 0, 0.5);
