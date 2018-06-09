@@ -1,12 +1,14 @@
 import React from "react"
 import { Reminder } from "./Reminder"
 import { ReminderData } from "./ReminderData"
+import { ReminderEditModal } from "./ReminderEditModal"
 import { ReminderList } from "./ReminderList"
 import { ReminderListSeparator } from "./ReminderListSeparator"
 import { Title } from "./Title"
 
 interface AppState {
   reminders: ReminderData[]
+  editingReminder?: ReminderData
 }
 
 export class App extends React.Component<{}, AppState> {
@@ -16,10 +18,11 @@ export class App extends React.Component<{}, AppState> {
       { id: 2, text: "do the other thing", active: true },
       { id: 3, text: "do the best thing", active: true },
     ],
+    editingReminder: { id: 1, text: "do the thing", active: true },
   }
 
   render() {
-    const { reminders } = this.state
+    const { reminders, editingReminder } = this.state
 
     const activeReminders = reminders
       .filter((r) => r.active)
@@ -32,11 +35,20 @@ export class App extends React.Component<{}, AppState> {
     return (
       <>
         <Title>Reminders</Title>
+
         <ReminderList>
           {activeReminders}
           <ReminderListSeparator />
           {inactiveReminders}
         </ReminderList>
+
+        {editingReminder && (
+          <ReminderEditModal
+            reminder={editingReminder}
+            onClose={this.handleEditModalClose}
+            onSubmit={this.handleEditSubmit}
+          />
+        )}
       </>
     )
   }
@@ -46,6 +58,7 @@ export class App extends React.Component<{}, AppState> {
       key={reminder.id}
       reminder={reminder}
       onMarkSeen={this.markReminderSeen}
+      onEdit={this.handleEdit}
     />
   )
 
@@ -55,6 +68,23 @@ export class App extends React.Component<{}, AppState> {
         return other === reminder ? { ...other, active: false } : other
       })
       return { reminders }
+    })
+  }
+
+  private handleEdit = (reminder: ReminderData) => {
+    this.setState({ editingReminder: reminder })
+  }
+
+  private handleEditModalClose = () => {
+    this.setState({ editingReminder: undefined })
+  }
+
+  private handleEditSubmit = (reminder: ReminderData) => {
+    this.setState((state) => {
+      const reminders = state.reminders.map((other) => {
+        return other.id === reminder.id ? reminder : other
+      })
+      return { reminders, editingReminder: undefined }
     })
   }
 }

@@ -47,7 +47,7 @@ export interface ReminderProps {
   reminder: ReminderData
   onMarkSeen: (reminder: ReminderData) => void
   onRemove?: (reminder: ReminderData) => void
-  onEdit?: (reminder: ReminderData) => void
+  onEdit: (reminder: ReminderData) => void
 }
 
 export class Reminder extends React.Component<ReminderProps> {
@@ -65,15 +65,18 @@ export class Reminder extends React.Component<ReminderProps> {
     return (
       <ReminderListItem active={active}>
         {content}
-        <ReminderAction>
+        <ReminderAction onClick={this.edit}>
           <i className="material-icons">edit</i>
         </ReminderAction>
       </ReminderListItem>
     )
   }
 
-  private markSeen = (event: React.SyntheticEvent<{}>) => {
-    event.preventDefault()
+  private markSeen = () => {
     this.props.onMarkSeen(this.props.reminder)
+  }
+
+  private edit = () => {
+    this.props.onEdit(this.props.reminder)
   }
 }
