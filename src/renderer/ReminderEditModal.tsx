@@ -101,14 +101,16 @@ export class ReminderEditModal extends React.Component<
   }
 
   private validate = () => {
-    this.setState((state) => {
-      const errors: Partial<FormValues> = {}
+    return new Promise((resolve) => {
+      this.setState((state) => {
+        const errors: Partial<FormValues> = {}
 
-      if (state.values.text.trim() === "") {
-        errors.text = "Please enter a value"
-      }
+        if (state.values.text.trim() === "") {
+          errors.text = "Please enter a value"
+        }
 
-      return { errors }
+        return { errors }
+      }, resolve)
     })
   }
 
@@ -116,9 +118,10 @@ export class ReminderEditModal extends React.Component<
     return Object.values(this.state.errors).length === 0
   }
 
-  private submit = (event: React.SyntheticEvent) => {
+  private submit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    this.validate()
+
+    await this.validate()
 
     if (this.isValid) {
       this.props.onSubmit({ ...this.props.reminder, ...this.state.values })
