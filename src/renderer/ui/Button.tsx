@@ -1,7 +1,7 @@
-import { darken } from "polished";
-import styled, { css } from "react-emotion";
-import * as colors from "./colors";
-import { Intent } from "./Intent";
+import { darken } from "polished"
+import styled, { css } from "react-emotion"
+import * as colors from "./colors"
+import { Intent } from "./Intent"
 
 export interface ButtonProps {
   intent?: Intent
