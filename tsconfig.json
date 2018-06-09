@@ -7,6 +7,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "lib": ["dom", "es2018"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react"
   }
 }

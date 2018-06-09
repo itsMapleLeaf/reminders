@@ -7,8 +7,13 @@
     "build": "tsc",
     "start": "yarn build && electron ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
   "devDependencies": {
+    "@types/react": "^16.3.17",
+    "@types/react-dom": "^16.0.6",
     "electron": "^2.0.2",
     "typescript": "^2.9.1"
   }
