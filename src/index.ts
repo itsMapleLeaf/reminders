@@ -4,6 +4,8 @@ import { resolve } from "path"
 
 const isDevMode = process.argv.includes("--dev")
 
+process.env.NODE_ENV = isDevMode ? "development" : "production"
+
 function getAssetPath(filename: string) {
   return resolve(__dirname, "../assets", filename)
 }
