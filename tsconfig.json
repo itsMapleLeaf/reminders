@@ -14,7 +14,8 @@
         "name": "typescript-styled-plugin",
         "tags": ["styled", "css", "keyframes", "injectGlobal"]
       }
-    ]
+    ],
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }
