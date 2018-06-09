@@ -4,15 +4,12 @@ import { resolve } from "path"
 
 const devMode = process.argv.includes("--dev")
 
-let win: BrowserWindow | null
-let tray: Tray | null
-
-app.on("ready", () => {
+function createWindow() {
   const windowWidth = 600
   const windowHeight = 400
   const displayBounds = screen.getPrimaryDisplay().workArea
 
-  win = new BrowserWindow({
+  const win = new BrowserWindow({
     frame: false,
     width: windowWidth,
     height: windowHeight,
@@ -22,24 +19,36 @@ app.on("ready", () => {
 
   win.loadFile(resolve(__dirname, "../assets/index.html"))
 
-  win.on("closed", () => {
-    win = null
-  })
-
   win.on("blur", () => {
-    if (win) win.hide()
+    win.hide()
   })
 
-  tray = new Tray(resolve(__dirname, "../assets/icon.png"))
+  return win
+}
 
-  tray.on("click", () => win && win.show())
+function createTray(win: BrowserWindow) {
+  const tray = new Tray(resolve(__dirname, "../assets/icon.png"))
+
+  tray.on("click", () => win.show())
+
+  return tray
+}
+
+function initDevMode(win: BrowserWindow) {
+  win.webContents.openDevTools()
+  const reloadWindow = win.webContents.reload.bind(win.webContents)
+  watch(resolve(__dirname, "../assets"), reloadWindow)
+  watch(resolve(__dirname, "./renderer"), reloadWindow)
+}
+
+function ready() {
+  const win = createWindow()
+
+  createTray(win)
 
   if (devMode) {
-    win.webContents.openDevTools()
-
-    const reloadWindow = win.webContents.reload.bind(win.webContents)
-
-    watch(resolve(__dirname, "../assets"), reloadWindow)
-    watch(resolve(__dirname, "./renderer"), reloadWindow)
+    initDevMode(win)
   }
-})
+}
+
+app.on("ready", ready)
