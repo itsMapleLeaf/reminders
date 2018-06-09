@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, Tray } from "electron"
+import { app, BrowserWindow, Menu, screen, Tray } from "electron"
 import { watch } from "fs"
 import { resolve } from "path"
 
@@ -27,10 +27,14 @@ function createWindow() {
 }
 
 function createTray(win: BrowserWindow) {
+  const menu = Menu.buildFromTemplate([
+    { label: "Show", click: () => win.show() },
+    { role: "quit" },
+  ])
+
   const tray = new Tray(resolve(__dirname, "../assets/icon.png"))
-
   tray.on("click", () => win.show())
-
+  tray.setContextMenu(menu)
   return tray
 }
 
