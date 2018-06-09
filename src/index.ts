@@ -4,6 +4,10 @@ import { resolve } from "path"
 
 const isDevMode = process.argv.includes("--dev")
 
+function getAssetPath(filename: string) {
+  return resolve(__dirname, "../assets", filename)
+}
+
 function createWindow() {
   const windowWidth = 600
   const windowHeight = 400
@@ -17,7 +21,7 @@ function createWindow() {
     y: displayBounds.height - windowHeight - 10,
   })
 
-  win.loadFile(resolve(__dirname, "../assets/index.html"))
+  win.loadFile(getAssetPath("index.html"))
 
   if (!isDevMode) {
     win.on("blur", () => {
@@ -34,7 +38,7 @@ function createTray(win: BrowserWindow) {
     { role: "quit" },
   ])
 
-  const tray = new Tray(resolve(__dirname, "../assets/icon.png"))
+  const tray = new Tray(getAssetPath("icon.png"))
   tray.on("click", () => win.show())
   tray.setContextMenu(menu)
   return tray
