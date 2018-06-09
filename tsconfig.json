@@ -8,6 +8,13 @@
     "rootDir": "src",
     "lib": ["dom", "es2018"],
     "esModuleInterop": true,
-    "jsx": "react"
-  }
+    "jsx": "react",
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled", "css", "keyframes", "injectGlobal"]
+      }
+    ]
+  },
+  "include": ["src/**/*"]
 }
