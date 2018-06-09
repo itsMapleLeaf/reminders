@@ -16,9 +16,26 @@ export function applyGlobalStyles() {
       cursor: default;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
+    }
+
     h1, h2, h3, h4, h5, h6 {
       font-family: "Roboto Condensed", sans-serif;
       font-weight: 300;
+    }
+
+    .material-icons {
+      vertical-align: text-bottom;
     }
   `
 }
