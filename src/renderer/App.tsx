@@ -1,10 +1,21 @@
 import React from "react"
+import styled from "react-emotion"
 import { ReminderData } from "../ReminderData"
 import { Reminder } from "./reminder/Reminder"
 import { ReminderDeleteModal } from "./reminder/ReminderDeleteModal"
 import { ReminderEditModal } from "./reminder/ReminderEditModal"
 import { ReminderList, ReminderListSeparator } from "./reminder/ReminderList"
-import { Title } from "./ui/Title"
+import { Button } from "./ui/Button"
+import { Icon } from "./ui/Icon"
+
+const AppHeader = styled("header")`
+  display: flex;
+  padding: 0.5rem 0.5rem 0;
+
+  > :first-child {
+    flex-grow: 1;
+  }
+`
 
 interface AppState {
   reminders: ReminderData[]
@@ -34,7 +45,17 @@ export class App extends React.Component<{}, AppState> {
 
     return (
       <>
-        <Title>Reminders</Title>
+        <AppHeader>
+          <h1>Reminders</h1>
+          <nav>
+            <Button>
+              <Icon name="plus" />
+            </Button>{" "}
+            <Button>
+              <Icon name="check-all" />
+            </Button>
+          </nav>
+        </AppHeader>
 
         <ReminderList>
           {activeReminders}
