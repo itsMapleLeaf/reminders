@@ -1,6 +1,7 @@
 import React from "react"
 import { ReminderData } from "../ReminderData"
 import { Reminder } from "./reminder/Reminder"
+import { ReminderDeleteModal } from "./reminder/ReminderDeleteModal"
 import { ReminderEditModal } from "./reminder/ReminderEditModal"
 import { ReminderList, ReminderListSeparator } from "./reminder/ReminderList"
 import { Title } from "./ui/Title"
@@ -8,6 +9,7 @@ import { Title } from "./ui/Title"
 interface AppState {
   reminders: ReminderData[]
   editingReminder?: ReminderData
+  confirmDelete?: ReminderData
 }
 
 export class App extends React.Component<{}, AppState> {
@@ -17,11 +19,10 @@ export class App extends React.Component<{}, AppState> {
       { id: 2, text: "do the other thing", active: true },
       { id: 3, text: "do the best thing", active: true },
     ],
-    editingReminder: { id: 1, text: "do the thing", active: true },
   }
 
   render() {
-    const { reminders, editingReminder } = this.state
+    const { reminders, editingReminder, confirmDelete } = this.state
 
     const activeReminders = reminders
       .filter((r) => r.active)
@@ -48,6 +49,14 @@ export class App extends React.Component<{}, AppState> {
             onSubmit={this.handleEditSubmit}
           />
         )}
+
+        {confirmDelete && (
+          <ReminderDeleteModal
+            reminder={confirmDelete}
+            onConfirm={this.deleteReminder}
+            onCancel={this.closeConfirmDeleteModal}
+          />
+        )}
       </>
     )
   }
@@ -58,6 +67,7 @@ export class App extends React.Component<{}, AppState> {
       reminder={reminder}
       onMarkSeen={this.markReminderSeen}
       onEdit={this.handleEdit}
+      onDelete={this.handleDelete}
     />
   )
 
@@ -85,5 +95,22 @@ export class App extends React.Component<{}, AppState> {
       })
       return { reminders, editingReminder: undefined }
     })
+  }
+
+  private handleDelete = (reminder: ReminderData) => {
+    this.setState({ confirmDelete: reminder })
+  }
+
+  private deleteReminder = (reminder: ReminderData) => {
+    this.setState((state) => {
+      return {
+        reminders: state.reminders.filter((r) => r.id !== reminder.id),
+      }
+    })
+    this.closeConfirmDeleteModal()
+  }
+
+  private closeConfirmDeleteModal = () => {
+    this.setState({ confirmDelete: undefined })
   }
 }

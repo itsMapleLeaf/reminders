@@ -47,7 +47,7 @@ const ReminderAction = styled("button")`
 export interface ReminderProps {
   reminder: ReminderData
   onMarkSeen: (reminder: ReminderData) => void
-  onRemove?: (reminder: ReminderData) => void
+  onDelete: (reminder: ReminderData) => void
   onEdit: (reminder: ReminderData) => void
 }
 
@@ -69,6 +69,9 @@ export class Reminder extends React.Component<ReminderProps> {
         <ReminderAction onClick={this.edit}>
           <Icon name="pencil" />
         </ReminderAction>
+        <ReminderAction onClick={this.delete}>
+          <Icon name="delete" />
+        </ReminderAction>
       </ReminderListItem>
     )
   }
@@ -79,5 +82,9 @@ export class Reminder extends React.Component<ReminderProps> {
 
   private edit = () => {
     this.props.onEdit(this.props.reminder)
+  }
+
+  private delete = () => {
+    this.props.onDelete(this.props.reminder)
   }
 }
