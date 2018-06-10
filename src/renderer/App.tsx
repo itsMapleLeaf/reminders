@@ -45,7 +45,7 @@ export class App extends React.Component<{}, AppState> {
         {editingReminder && (
           <ReminderEditModal
             reminder={editingReminder}
-            onClose={this.handleEditModalClose}
+            onClose={this.hideEditModal}
             onSubmit={this.handleEditSubmit}
           />
         )}
@@ -53,8 +53,8 @@ export class App extends React.Component<{}, AppState> {
         {confirmDelete && (
           <ReminderDeleteModal
             reminder={confirmDelete}
-            onConfirm={this.deleteReminder}
-            onCancel={this.closeConfirmDeleteModal}
+            onCancel={this.hideConfirmDeleteModal}
+            onConfirm={this.handleConfirmDelete}
           />
         )}
       </>
@@ -66,10 +66,28 @@ export class App extends React.Component<{}, AppState> {
       key={reminder.id}
       reminder={reminder}
       onMarkSeen={this.markReminderSeen}
-      onEdit={this.handleEdit}
-      onDelete={this.handleDelete}
+      onEdit={this.showEditModal}
+      onDelete={this.showConfirmDeleteModal}
     />
   )
+
+  private handleConfirmDelete = (reminder: ReminderData) => {
+    this.deleteReminder(reminder)
+    this.hideConfirmDeleteModal()
+  }
+
+  private handleEditSubmit = (reminder: ReminderData) => {
+    this.updateReminder(reminder)
+    this.hideEditModal()
+  }
+
+  private deleteReminder = (reminder: ReminderData) => {
+    this.setState((state) => {
+      return {
+        reminders: state.reminders.filter((r) => r.id !== reminder.id),
+      }
+    })
+  }
 
   private markReminderSeen = (reminder: ReminderData) => {
     this.setState((state) => {
@@ -80,37 +98,28 @@ export class App extends React.Component<{}, AppState> {
     })
   }
 
-  private handleEdit = (reminder: ReminderData) => {
-    this.setState({ editingReminder: reminder })
-  }
-
-  private handleEditModalClose = () => {
-    this.setState({ editingReminder: undefined })
-  }
-
-  private handleEditSubmit = (reminder: ReminderData) => {
+  private updateReminder = (reminder: ReminderData) => {
     this.setState((state) => {
       const reminders = state.reminders.map((other) => {
         return other.id === reminder.id ? reminder : other
       })
-      return { reminders, editingReminder: undefined }
+      return { reminders }
     })
   }
 
-  private handleDelete = (reminder: ReminderData) => {
+  private showEditModal = (reminder: ReminderData) => {
+    this.setState({ editingReminder: reminder })
+  }
+
+  private hideEditModal = () => {
+    this.setState({ editingReminder: undefined })
+  }
+
+  private showConfirmDeleteModal = (reminder: ReminderData) => {
     this.setState({ confirmDelete: reminder })
   }
 
-  private deleteReminder = (reminder: ReminderData) => {
-    this.setState((state) => {
-      return {
-        reminders: state.reminders.filter((r) => r.id !== reminder.id),
-      }
-    })
-    this.closeConfirmDeleteModal()
-  }
-
-  private closeConfirmDeleteModal = () => {
+  private hideConfirmDeleteModal = () => {
     this.setState({ confirmDelete: undefined })
   }
 }
