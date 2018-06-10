@@ -41,7 +41,7 @@ export class ReminderEditModal extends React.Component<
 
   render() {
     return (
-      <Modal onShadeClick={this.props.onClose}>
+      <Modal>
         <Title>Edit Reminder</Title>
 
         <Form onSubmit={this.submit}>
