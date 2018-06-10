@@ -37,9 +37,5 @@ export function applyGlobalStyles() {
       font-family: "Roboto Condensed", sans-serif;
       font-weight: 300;
     }
-
-    .material-icons {
-      vertical-align: text-bottom;
-    }
   `
 }

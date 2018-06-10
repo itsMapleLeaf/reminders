@@ -3,6 +3,7 @@ import React from "react"
 import styled, { css } from "react-emotion"
 import { ReminderData } from "../../ReminderData"
 import { themeColor } from "../ui/colors"
+import { Icon } from "../ui/Icon"
 
 const resolveReminderActiveStyle = ({ active }: { active?: boolean }) =>
   active && reminderActiveStyle
@@ -56,7 +57,7 @@ export class Reminder extends React.Component<ReminderProps> {
 
     const content = active ? (
       <ReminderAction onClick={this.markSeen}>
-        <i className="material-icons">done</i> {text}
+        <Icon name="check" /> {text}
       </ReminderAction>
     ) : (
       <span>{text}</span>
@@ -66,7 +67,7 @@ export class Reminder extends React.Component<ReminderProps> {
       <ReminderListItem active={active}>
         {content}
         <ReminderAction onClick={this.edit}>
-          <i className="material-icons">edit</i>
+          <Icon name="pencil" />
         </ReminderAction>
       </ReminderListItem>
     )
