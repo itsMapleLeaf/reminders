@@ -2,7 +2,8 @@ import React from "react"
 import { css } from "react-emotion"
 
 const iconStyle = css`
-  vertical-align: text-bottom;
+  vertical-align: baseline;
+  font-size: 22px;
 `
 
 export interface IconProps {
