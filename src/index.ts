@@ -49,8 +49,8 @@ function createTray(win: BrowserWindow) {
 function initDevMode(win: BrowserWindow) {
   win.webContents.openDevTools()
   const reloadWindow = win.webContents.reload.bind(win.webContents)
-  watch(resolve(__dirname, "../assets"), reloadWindow)
-  watch(resolve(__dirname, "./renderer"), reloadWindow)
+  watch(resolve(__dirname, "../assets"), { recursive: true }, reloadWindow)
+  watch(resolve(__dirname, "./renderer"), { recursive: true }, reloadWindow)
 }
 
 function ready() {
