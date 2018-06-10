@@ -2,34 +2,10 @@ import React from "react"
 import styled from "react-emotion"
 import { ReminderData } from "../../ReminderData"
 import { Button } from "../ui/Button"
-import { themeColor } from "../ui/colors"
 import { Intent } from "../ui/Intent"
+import { Modal } from "../ui/Modal"
 import { TextField } from "../ui/TextField"
 import { Title } from "../ui/Title"
-
-const Shade = styled("div")`
-  background: rgba(0, 0, 0, 0.5);
-
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  display: flex;
-
-  > * {
-    margin: auto;
-  }
-`
-
-const Panel = styled("div")`
-  background: ${themeColor};
-  box-shadow: 0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
-
-  width: 20rem;
-  max-width: calc(100vw - 4rem);
-`
 
 const Form = styled("form")`
   padding: 0.5rem;
@@ -65,33 +41,31 @@ export class ReminderEditModal extends React.Component<
 
   render() {
     return (
-      <Shade onClick={this.close}>
-        <Panel>
-          <Title>Edit Reminder</Title>
+      <Modal onShadeClick={this.props.onClose}>
+        <Title>Edit Reminder</Title>
 
-          <Form onSubmit={this.submit}>
-            <fieldset>
-              <TextField
-                label="What should I remind you about?"
-                placeholder="do the thing lol"
-                value={this.state.values.text}
-                onChange={this.updateText}
-                error={this.state.errors.text}
-                autoFocus
-              />
-            </fieldset>
+        <Form onSubmit={this.submit}>
+          <fieldset>
+            <TextField
+              label="What should I remind you about?"
+              placeholder="do the thing lol"
+              value={this.state.values.text}
+              onChange={this.updateText}
+              error={this.state.errors.text}
+              autoFocus
+            />
+          </fieldset>
 
-            <fieldset>
-              <Button type="submit" intent={Intent.success}>
-                Create
-              </Button>{" "}
-              <Button type="button" onClick={this.close}>
-                Cancel
-              </Button>
-            </fieldset>
-          </Form>
-        </Panel>
-      </Shade>
+          <fieldset>
+            <Button type="submit" intent={Intent.success}>
+              Create
+            </Button>{" "}
+            <Button type="button" onClick={this.props.onClose}>
+              Cancel
+            </Button>
+          </fieldset>
+        </Form>
+      </Modal>
     )
   }
 
@@ -125,12 +99,6 @@ export class ReminderEditModal extends React.Component<
 
     if (this.isValid) {
       this.props.onSubmit({ ...this.props.reminder, ...this.state.values })
-    }
-  }
-
-  private close = (event: React.SyntheticEvent) => {
-    if (event.target === event.currentTarget) {
-      this.props.onClose()
     }
   }
 }
